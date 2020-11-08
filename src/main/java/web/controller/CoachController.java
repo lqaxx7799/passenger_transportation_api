@@ -1,5 +1,6 @@
 package web.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,6 +37,9 @@ public class CoachController {
 
 	@PostMapping("/coach")
 	public Coach addNew(@RequestBody Coach coach) {
+		// TODO: implement validation
+		coach.setCreatedTime(new Date());
+		coach.setIsDeleted(false);
 		return coachRepository.save(coach);
 	}
 
