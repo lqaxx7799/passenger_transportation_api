@@ -9,6 +9,5 @@ import web.model.Account;
 
 public interface AccountRepository  extends JpaRepository<Account, Integer> {
 	@Query("SELECT a FROM Account a WHERE a.userName = :userName")
-//	@Parameter(name = "userName", value = "userName")
-	public Account findByUserName(String userName);
+	public Account findByUserName(@Param(value = "userName") String userName);
 }
