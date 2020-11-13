@@ -33,8 +33,16 @@ public class CoachController {
 
 	@GetMapping("/coach/{id}")
 	public Coach getById(@PathVariable int id) {
-		return coachRepository.findById(id).filter(coach -> !coach.getIsDeleted())
-				.orElseThrow(() -> new CoachNotFoundException(id));
+//		return coachRepository.findById(id).filter(coach -> !coach.getIsDeleted())
+//				.orElseThrow(() -> new CoachNotFoundException(id));
+		Coach coach = coachRepository.findById(id).get();
+		if (coach == null) {
+			throw new CoachNotFoundException(id);
+		}
+		if (coach.getIsDeleted()) {
+			throw new CoachNotFoundException(id);
+		}
+		return coach;
 	}
 
 	@PostMapping("/coach")
@@ -63,9 +71,9 @@ public class CoachController {
 	}
 
 	@DeleteMapping("/coach/{id}")
-	public void delete(@PathVariable int id) {
+	public Coach delete(@PathVariable int id) {
 		// if found, perform update, else throw error
-		coachRepository.findById(id).map(coach -> {
+		return coachRepository.findById(id).map(coach -> {
 			coach.setIsDeleted(true);
 			return coachRepository.save(coach);
 		}).orElseThrow(() -> new CoachNotFoundException(id));
