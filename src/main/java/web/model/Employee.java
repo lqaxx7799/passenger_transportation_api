@@ -9,10 +9,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Date;
 import java.util.List;
 
-/**
- * The persistent class for the employees database table.
- * 
- */
 @Entity
 @Table(name = "employees")
 @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
@@ -25,6 +21,7 @@ public class Employee implements Serializable {
 	@Column(name = "id")
 	private int id;
 
+	
 	private String address;
 
 	@Temporal(TemporalType.TIMESTAMP)

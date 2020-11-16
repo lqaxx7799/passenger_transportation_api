@@ -2,7 +2,7 @@ package web.controller;
 
 import java.util.Date;
 import java.util.List;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import web.exception.CoachNotFoundException;
 import web.model.Coach;
 import web.repos.CoachRepository;
@@ -43,7 +42,7 @@ public class CoachController {
 	}
 
 	@PostMapping("/coach")
-	public Coach addNew(@RequestBody Coach coach) {
+	public Coach addNew(@Valid @RequestBody Coach coach) {
 		// TODO: implement validation
 		coach.setCreatedTime(new Date());
 		coach.setIsDeleted(false);
@@ -51,7 +50,7 @@ public class CoachController {
 	}
 
 	@PutMapping("/coach/{id}")
-	public Coach update(@RequestBody Coach newCoach, @PathVariable int id) {
+	public Coach update(@Valid @RequestBody Coach newCoach, @PathVariable int id) {
 		// if found, perform update, else throw error
 		return coachRepository.findById(id).map(coach -> {
 			// skip id, createdTime and isDeleted
