@@ -9,5 +9,5 @@ import web.model.Coach;
 
 public interface CoachRepository extends JpaRepository<Coach, Integer> {
 	@Query("SELECT c FROM Coach c WHERE c.isDeleted	= false")
-	List<Coach> findAllAvailable();
+	List<Coach> findAllAvailable();	
 }
