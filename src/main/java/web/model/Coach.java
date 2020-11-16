@@ -5,10 +5,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-/**
- * The persistent class for the coaches database table.
- * 
- */
 @Entity
 @Table(name = "coaches")
 @NamedQuery(name = "Coach.findAll", query = "SELECT c FROM Coach c")
