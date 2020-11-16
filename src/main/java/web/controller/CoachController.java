@@ -3,9 +3,6 @@ package web.controller;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
