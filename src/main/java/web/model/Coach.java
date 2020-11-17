@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "coaches")
@@ -65,6 +67,7 @@ public class Coach implements Serializable {
 	private int usedYears;
 
 	// bi-directional many-to-one association to Trip
+	@JsonIgnore
 	@OneToMany(mappedBy = "coach")
 	private List<Trip> trips;
 
