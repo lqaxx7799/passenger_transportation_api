@@ -3,6 +3,8 @@ package web.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import web.model.Employee;
 import web.repos.EmployeeRepository;
+import web.exception.EmployeeExistsException;
 import web.exception.EmployeeNotFoundException;
 
 @RestController
@@ -35,15 +38,19 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/employee")
-	public Employee addNew(@RequestBody Employee employee) {
+	public Employee addNew(@Valid @RequestBody Employee employee) {
 		// TODO: implement validation
+		if(employeeRepository.existByIdentificationNumber(employee.getIdentificationNumber())) {
+			throw new EmployeeExistsException(employee.getIdentificationNumber());
+		}
+		
 		employee.setStartedTime(new Date());
 		employee.setIsWorking(true);
 		return employeeRepository.save(employee);
 	}
 	
 	@PutMapping("/employee/{id}")
-	public Employee update(@RequestBody Employee newEmployee, @PathVariable int id) {
+	public Employee update(@Valid @RequestBody Employee newEmployee, @PathVariable int id) {
 		// if found, perform update, else throw error
 		return employeeRepository.findById(id).map(employee -> {
 			// skip id, createdTime and isDeleted
