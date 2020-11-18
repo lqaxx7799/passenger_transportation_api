@@ -29,16 +29,8 @@ public class CoachController {
 
 	@GetMapping("/coach/{id}")
 	public Coach getById(@PathVariable int id) {
-//		return coachRepository.findById(id).filter(coach -> !coach.getIsDeleted())
-//				.orElseThrow(() -> new CoachNotFoundException(id));
-		Coach coach = coachRepository.findById(id).get();
-		if (coach == null) {
-			throw new CoachNotFoundException(id);
-		}
-		if (coach.getIsDeleted()) {
-			throw new CoachNotFoundException(id);
-		}
-		return coach;
+		return coachRepository.findById(id).filter(coach -> !coach.getIsDeleted())
+				.orElseThrow(() -> new CoachNotFoundException(id));
 	}
 
 	@PostMapping("/coach")

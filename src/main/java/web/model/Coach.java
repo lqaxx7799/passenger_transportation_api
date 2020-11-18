@@ -1,6 +1,7 @@
 package web.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "coaches")
@@ -20,13 +25,17 @@ public class Coach implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "id")
 	private int id;
-
+	
+	@NotEmpty(message = "Please provide coach model")
 	@Column(name = "coach_model")
 	private String coachModel;
 
+	
+	@NotEmpty(message = "Please provide coach version")
 	@Column(name = "coach_version")
 	private String coachVersion;
 
+	@NotEmpty(message = "Please provide coach color")
 	private String color;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -36,19 +45,27 @@ public class Coach implements Serializable {
 	@Column(name = "is_deleted", columnDefinition = "BIT(1)")
 	private boolean isDeleted;
 
+	
+	@NotNull(message = "Please provide last maintained date, format: yyyy-MM-dd'T'HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_maintained_date")
 	private Date lastMaintainedDate;
 
+	@NotEmpty(message = "Please provide coach license plate")
 	@Column(name = "license_plate")
 	private String licensePlate;
 
+	@NotEmpty(message = "Please provide coach manufacturer name")
 	@Column(name = "manufacturer_name")
 	private String manufacturerName;
 
+	@NotNull()
+	@Min(value = 4, message = "Please provide number of seats, must be a number greater than or equal 4")
 	@Column(name = "number_of_seats")
 	private int numberOfSeats;
-
+	
+	@NotNull(message = "Please provide used years, must be a number")
+	@Min(value = 0, message = "Please provide used years, must be a number")
 	@Column(name = "used_years")
 	private int usedYears;
 

@@ -24,4 +24,8 @@ public interface TripRepository extends JpaRepository<Trip, Integer>{
 	
 	@Query("SELECT t FROM Trip t WHERE t.isDeleted = false AND t.arrivalTime > ?1 AND t.arrivalTime < ?2")
 	List<Trip> findFinishTripBetweenDate(Date fromDate, Date toDate);
+
+public interface TripRepository extends JpaRepository<Trip, Integer> {
+	@Query("SELECT t FROM Trip t WHERE t.departureTime >= ?1 AND t.arrivalTime <= ?2")
+	List<Trip> getAllTripFromDateToDate(Date fromDate , Date toDate);
 }

@@ -6,6 +6,11 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
+
 import java.util.Date;
 import java.util.List;
 
@@ -21,30 +26,38 @@ public class Employee implements Serializable {
 	@Column(name = "id")
 	private int id;
 
-	
+	@NotEmpty(message = "Please provide address")
 	private String address;
 
+	@NotNull(message = "Please provide date of birth, format: yyyy-MM-dd")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_of_birth")
 	private Date dateOfBirth;
 
+	@NotEmpty(message = "Please provide employee name")
 	@Column(name = "employee_name")
 	private String employeeName;
 
+	@NotEmpty(message = "Please provide gender")
 	private String gender;
 
+	@NotEmpty(message = "Please provide identification number")
 	@Column(name = "identification_number")
 	private String identificationNumber;
 
 	@Column(name = "is_working", columnDefinition = "BIT(1)")
 	private boolean isWorking;
 
+	@NotEmpty(message = "Please provide license code")
 	@Column(name = "license_code")
 	private String licenseCode;
 
+	@NotEmpty(message = "Please provide license type")
 	@Column(name = "license_type")
 	private String licenseType;
 
+	@NotNull(message = "Please provide seniortity, must be a number")
+	@Range(min = 0, max = 100)
 	private int seniority;
 
 	@Temporal(TemporalType.TIMESTAMP)
