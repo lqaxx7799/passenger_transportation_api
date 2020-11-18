@@ -2,6 +2,10 @@ package web.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +47,8 @@ public class Route implements Serializable {
 	private String startingPoint;
 
 	// bi-directional many-to-one association to Trip
-	@OneToMany(mappedBy = "route")
+	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "route")
 	private List<Trip> trips;
 
 	public Route() {

@@ -2,6 +2,10 @@ package web.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -61,11 +65,13 @@ public class Employee implements Serializable {
 	private Date startedTime;
 
 	// bi-directional many-to-one association to Trip
-	@OneToMany(mappedBy = "employee1")
+	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "employee1")
 	private List<Trip> trips1;
 
 	// bi-directional many-to-one association to Trip
-	@OneToMany(mappedBy = "employee2")
+	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "employee2")
 	private List<Trip> trips2;
 
 	public Employee() {

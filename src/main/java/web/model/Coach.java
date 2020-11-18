@@ -3,13 +3,16 @@ package web.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 @Table(name = "coaches")
@@ -67,8 +70,8 @@ public class Coach implements Serializable {
 	private int usedYears;
 
 	// bi-directional many-to-one association to Trip
-	@JsonIgnore
-	@OneToMany(mappedBy = "coach")
+	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "coach")
 	private List<Trip> trips;
 
 	public Coach() {

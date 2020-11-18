@@ -2,6 +2,9 @@ package web.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 
 /**
@@ -44,22 +47,28 @@ public class Trip implements Serializable {
 	private float ticketPrice;
 
 	// bi-directional many-to-one association to Coach
+	@JsonBackReference
 	@ManyToOne
-	private Coach coach;
+		@JoinColumn(name = "coach_id")
+		private Coach coach;
 
 	// bi-directional many-to-one association to Employee
-	@ManyToOne
-	@JoinColumn(name = "driver_id")
-	private Employee employee1;
+	@JsonBackReference
+		@ManyToOne
+		@JoinColumn(name = "driver_id")
+		private Employee employee1;
 
 	// bi-directional many-to-one association to Employee
-	@ManyToOne
-	@JoinColumn(name = "assistant_id")
-	private Employee employee2;
+	@JsonBackReference
+		@ManyToOne
+		@JoinColumn(name = "assistant_id")
+		private Employee employee2;
 
 	// bi-directional many-to-one association to Route
-	@ManyToOne
-	private Route route;
+	@JsonBackReference
+		@ManyToOne
+		@JoinColumn(name = "route_id")
+		private Route route;
 
 	public Trip() {
 	}

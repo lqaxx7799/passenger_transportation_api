@@ -39,11 +39,9 @@ public class EmployeeController {
 	
 	@PostMapping("/employee")
 	public Employee addNew(@Valid @RequestBody Employee employee) {
-		// TODO: implement validation
 		if(employeeRepository.existByIdentificationNumber(employee.getIdentificationNumber())) {
 			throw new EmployeeExistsException(employee.getIdentificationNumber());
 		}
-		
 		employee.setStartedTime(new Date());
 		employee.setIsWorking(true);
 		return employeeRepository.save(employee);
