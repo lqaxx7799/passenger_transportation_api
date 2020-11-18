@@ -29,6 +29,4 @@ public class CoachRevenueStatistic implements Serializable{
 	public void setRevenue(long revenue) {
 		this.revenue = revenue;
 	}
-	
-	
 }

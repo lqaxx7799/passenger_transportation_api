@@ -28,9 +28,13 @@ public class CoachRevenueStatisticController {
 		
 		Date fromDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fromDate+" 00:00:00");
 		Date toDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(toDate+" 00:00:00");
+		
 		List<Trip> list = tripRepository.getAllTripFromDateToDate(fromDate1, toDate1);
+		
 		ArrayList<Coach> list1 = new ArrayList<>();
+		
 		ArrayList<CoachRevenueStatistic> list2 = new ArrayList<>();
+		
 		for(Trip trip : list) {
 			if(!list1.contains(trip.getCoach())) {
 				list1.add(trip.getCoach());
