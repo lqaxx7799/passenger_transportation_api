@@ -25,12 +25,11 @@ public class Coach implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "id")
 	private int id;
-	
+
 	@NotEmpty(message = "Please provide coach model")
 	@Column(name = "coach_model")
 	private String coachModel;
 
-	
 	@NotEmpty(message = "Please provide coach version")
 	@Column(name = "coach_version")
 	private String coachVersion;
@@ -41,11 +40,10 @@ public class Coach implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_time")
 	private Date createdTime;
-	
+
 	@Column(name = "is_deleted", columnDefinition = "BIT(1)")
 	private boolean isDeleted;
 
-	
 	@NotNull(message = "Please provide last maintained date, format: yyyy-MM-dd'T'HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_maintained_date")
@@ -63,15 +61,15 @@ public class Coach implements Serializable {
 	@Min(value = 4, message = "Please provide number of seats, must be a number greater than or equal 4")
 	@Column(name = "number_of_seats")
 	private int numberOfSeats;
-	
+
 	@NotNull(message = "Please provide used years, must be a number")
 	@Min(value = 0, message = "Please provide used years, must be a number")
 	@Column(name = "used_years")
 	private int usedYears;
 
 	// bi-directional many-to-one association to Trip
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "coach")
+	@JsonManagedReference(value = "trip-coach")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "coach")
 	private List<Trip> trips;
 
 	public Coach() {

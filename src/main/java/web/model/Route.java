@@ -47,8 +47,8 @@ public class Route implements Serializable {
 	private String startingPoint;
 
 	// bi-directional many-to-one association to Trip
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "route")
+	@JsonManagedReference(value = "trip-route")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "route")
 	private List<Trip> trips;
 
 	public Route() {
