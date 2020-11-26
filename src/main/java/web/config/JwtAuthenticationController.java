@@ -9,10 +9,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import web.model.Account;
 import web.model.AccountDTO;
 
 @RestController
@@ -37,6 +39,14 @@ public class JwtAuthenticationController {
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
 		return ResponseEntity.ok(new JwtResponse(token));
+	}
+	
+	@RequestMapping(value = "/validate", method = RequestMethod.GET)
+	public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authorization) throws Exception {
+		String token = authorization.substring(7, authorization.length());
+		String username = jwtTokenUtil.getUsernameFromToken(token);
+		Account user = userDetailsService.findByUserName(username);
+		return ResponseEntity.ok(user);
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
