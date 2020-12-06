@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import web.model.Coach;
 import web.model.Trip;
 
 public interface TripRepository extends JpaRepository<Trip, Integer>{
@@ -24,7 +25,12 @@ public interface TripRepository extends JpaRepository<Trip, Integer>{
 	
 	@Query("SELECT t FROM Trip t WHERE t.isDeleted = false AND t.arrivalTime > ?1 AND t.arrivalTime < ?2")
 	List<Trip> findFinishTripBetweenDate(Date fromDate, Date toDate);
-
+	
+	@Query("SELECT t FROM Trip t WHERE t.isDeleted = false AND t.arrivalTime > ?1 AND t.arrivalTime < ?2 "
+			+ "AND t.coach = ?3")
+	List<Trip> findFinishTripBetweenDateByCoachId(Date fromDate, Date toDate, Coach coach);
+	
+	
 	@Query("SELECT t FROM Trip t WHERE t.departureTime >= ?1 AND t.arrivalTime <= ?2")
 	List<Trip> getAllTripFromDateToDate(Date fromDate , Date toDate);
 }
