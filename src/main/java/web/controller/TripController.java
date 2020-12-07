@@ -39,6 +39,7 @@ public class TripController {
 		return tripRepository.findById(id).filter(trip -> !trip.getIsDeleted())
 				.orElseThrow(() -> new TripNotFoundException(id));
 	}
+	
 	@PostMapping("/trip")
 	public Trip addNew(@RequestBody Trip trip) {
 		trip.setArrivalTime(new Date());

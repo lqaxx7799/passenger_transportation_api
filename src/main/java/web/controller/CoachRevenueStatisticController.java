@@ -22,35 +22,50 @@ import web.model.CoachRevenueStatistic;
 public class CoachRevenueStatisticController {
 	@Autowired
 	private TripRepository tripRepository;
-	
+
+	private ArrayList<CoachRevenueStatistic> listCoachStatistic = null;
+
 	@GetMapping("/statisticCoachRevenue/{fromDate}/{toDate}")
-	public ArrayList<CoachRevenueStatistic> statistic(@PathVariable String fromDate, @PathVariable String toDate) throws ParseException {
-		
-		Date fromDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fromDate+" 00:00:00");
-		Date toDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(toDate+" 00:00:00");
-		
-		List<Trip> list = tripRepository.getAllTripFromDateToDate(fromDate1, toDate1);
-		
-		ArrayList<Coach> list1 = new ArrayList<>();
-		
-		ArrayList<CoachRevenueStatistic> list2 = new ArrayList<>();
-		
-		for(Trip trip : list) {
-			if(!list1.contains(trip.getCoach())) {
-				list1.add(trip.getCoach());
+	public ArrayList<CoachRevenueStatistic> statistic(@PathVariable String fromDate, @PathVariable String toDate)throws ParseException {
+
+		Date fromDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fromDate + " 00:00:00");
+		Date toDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(toDate + " 00:00:00");
+
+		List<Trip> listTrip = tripRepository.getAllTripFromDateToDate(fromDate1, toDate1);
+
+		ArrayList<Coach> listCoach = new ArrayList<>();
+
+		listCoachStatistic = new ArrayList<>();
+
+		for (Trip trip : listTrip) {
+			if (!listCoach.contains(trip.getCoach())) {
+				listCoach.add(trip.getCoach());
 			}
 		}
-		
-		for(Coach coach : list1) {
-			CoachRevenueStatistic crs = new CoachRevenueStatistic(coach,(long) 0);
-			for(Trip trip : list) {
-				if(trip.getCoach().equals(coach)) {
-					long revenue = (long) (crs.getRevenue() + trip.getNumberOfPassengers()*trip.getTicketPrice());
+
+		for (Coach coach : listCoach) {
+			CoachRevenueStatistic crs = new CoachRevenueStatistic(coach, (long) 0);
+			List<Trip> t = new ArrayList<>();
+			for (Trip trip : listTrip) {
+				if (trip.getCoach().equals(coach)) {
+					long revenue = (long) (crs.getRevenue() + trip.getNumberOfPassengers() * trip.getTicketPrice());
 					crs.setRevenue(revenue);
+					t.add(trip);
 				}
 			}
-			list2.add(crs);
+			crs.setListTrip(t);
+			listCoachStatistic.add(crs);
 		}
-		return list2;
+		return listCoachStatistic;
+	}
+
+	@GetMapping("/statisticCoachRevenue/detail/{id}")
+	public List<Trip> statisticDetail(@PathVariable int id) {
+		for (CoachRevenueStatistic crs : listCoachStatistic) {
+			if (crs.getCoach().getId() == id) {
+				return crs.getListTrip();
+			}
+		}
+		return null;
 	}
 }
