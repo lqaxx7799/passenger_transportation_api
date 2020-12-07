@@ -4,8 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -66,13 +69,13 @@ public class Employee implements Serializable {
 	private Date startedTime;
 
 	// bi-directional many-to-one association to Trip
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "employee1")
 	@JsonBackReference(value = "trip-driver")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee1")
 	private List<Trip> trips1;
 
 	// bi-directional many-to-one association to Trip
 	@JsonBackReference(value = "trip-assistant")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee2")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "employee2")
 	private List<Trip> trips2;
 
 	public Employee() {
