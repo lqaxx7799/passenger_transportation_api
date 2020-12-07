@@ -17,7 +17,7 @@ import web.model.Coach;
 import web.repos.CoachRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class CoachController {
 	@Autowired
 	private CoachRepository coachRepository;

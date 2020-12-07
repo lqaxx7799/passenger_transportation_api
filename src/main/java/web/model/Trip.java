@@ -2,8 +2,15 @@ package web.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Date;
 
@@ -38,36 +45,40 @@ public class Trip implements Serializable {
 	@Column(name = "is_deleted", columnDefinition = "BIT(1)")
 	private boolean isDeleted;
 
+	@NotNull
+	@DecimalMin("1")
 	@Column(name = "number_of_passengers")
 	private int numberOfPassengers;
 
 	private int status;
 
+	@NotNull(message = "please provide a ticket price")
+	@DecimalMin("1.00")
 	@Column(name = "ticket_price")
 	private float ticketPrice;
 
 	// bi-directional many-to-one association to Coach
-	@JsonBackReference(value = "trip-coach")
+	@JsonManagedReference(value = "trip-coach")
 	@ManyToOne
 	@JoinColumn(name = "coach_id")
 	private Coach coach;
 
 	// bi-directional many-to-one association to Employee
-	@JsonBackReference(value = "trip-driver")
+	@JsonManagedReference(value = "trip-driver")
 	@ManyToOne
 	@JoinColumn(name = "driver_id")
 	private Employee employee1;
 
 	// bi-directional many-to-one association to Employee
-	@JsonBackReference(value = "trip-assistant")
+	@JsonManagedReference(value = "trip-assistant")
 	@ManyToOne
 	@JoinColumn(name = "assistant_id")
 	private Employee employee2;
 
 	// bi-directional many-to-one association to Route
-	@JsonBackReference(value = "trip-route")
 	@ManyToOne
 	@JoinColumn(name = "route_id")
+	@JsonManagedReference
 	private Route route;
 
 	public Trip() {

@@ -3,6 +3,8 @@ package web.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +43,7 @@ public class TripController {
 	}
 	
 	@PostMapping("/trip")
-	public Trip addNew(@RequestBody Trip trip) {
+	public Trip addNew(@Valid @RequestBody Trip trip) {
 		trip.setArrivalTime(new Date());
 		trip.setCreatedTime(new Date());
 		trip.setIsDeleted(false);
@@ -50,7 +52,7 @@ public class TripController {
 	}
 	
 	@PutMapping("/trip/{id}")
-	public Trip update(@RequestBody Trip newTrip, @PathVariable int id) {
+	public Trip update(@Valid @RequestBody Trip newTrip, @PathVariable int id) {
 		return tripRepository.findById(id).map(trip ->{
 			trip.setCoach(newTrip.getCoach());
 			trip.setDepartureTime(newTrip.getDepartureTime());

@@ -2,9 +2,16 @@ package web.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Date;
 import java.util.List;
@@ -28,12 +35,17 @@ public class Route implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_time")
 	private Date createdTime;
-
+	
+	@NotEmpty(message = "Please provide a destination point")
 	@Column(name = "destination_point")
 	private String destinationPoint;
-
+	
+	@NotNull(message = "please provide a distance")
+	@DecimalMin("1.00")
 	private float distance;
 
+	@NotNull(message = "please provide a estimated hours")
+	@DecimalMin("1.00")
 	@Column(name = "estimated_hours")
 	private float estimatedHours;
 
@@ -42,13 +54,14 @@ public class Route implements Serializable {
 
 	@Column(name = "route_complexity")
 	private int routeComplexity;
-
+	
+	@NotEmpty(message = "Please provide a starting point")
 	@Column(name = "starting_point")
 	private String startingPoint;
 
 	// bi-directional many-to-one association to Trip
-	@JsonManagedReference(value = "trip-route")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "route")
+	@JsonBackReference(value = "trip-route")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "route")
 	private List<Trip> trips;
 
 	public Route() {

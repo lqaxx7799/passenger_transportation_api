@@ -23,10 +23,9 @@ public class CoachRevenueStatisticController {
 	@Autowired
 	private TripRepository tripRepository;
 
-	private ArrayList<CoachRevenueStatistic> listCoachStatistic = null;
-
 	@GetMapping("/statisticCoachRevenue/{fromDate}/{toDate}")
 	public ArrayList<CoachRevenueStatistic> statistic(@PathVariable String fromDate, @PathVariable String toDate)throws ParseException {
+		ArrayList<CoachRevenueStatistic> listCoachStatistic = null;
 
 		Date fromDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fromDate + " 00:00:00");
 		Date toDate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(toDate + " 00:00:00");
@@ -57,15 +56,5 @@ public class CoachRevenueStatisticController {
 			listCoachStatistic.add(crs);
 		}
 		return listCoachStatistic;
-	}
-
-	@GetMapping("/statisticCoachRevenue/detail/{id}")
-	public List<Trip> statisticDetail(@PathVariable int id) {
-		for (CoachRevenueStatistic crs : listCoachStatistic) {
-			if (crs.getCoach().getId() == id) {
-				return crs.getListTrip();
-			}
-		}
-		return null;
 	}
 }

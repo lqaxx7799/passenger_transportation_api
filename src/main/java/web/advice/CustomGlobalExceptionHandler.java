@@ -54,8 +54,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     	body.put("Status", status.value());
         body.put("Message", "Required request body is missing");
         body.put("Cause: ", ex.getLocalizedMessage());
-         
-
+        
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
     

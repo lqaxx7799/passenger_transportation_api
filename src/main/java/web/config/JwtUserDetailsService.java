@@ -33,6 +33,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 				new ArrayList<>());
 	}
 	
+	public Account findByUserName(String username) {
+		return accountRepos.findByUserName(username);
+	}
+	
 	public Account save(AccountDTO accountDTO) {
 		Account account = new Account();
 		account.setUserName(accountDTO.getUsername());
