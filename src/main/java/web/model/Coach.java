@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -68,7 +69,7 @@ public class Coach implements Serializable {
 	private int usedYears;
 
 	// bi-directional many-to-one association to Trip
-	@JsonManagedReference(value = "trip-coach")
+	@JsonBackReference//(value = "trip-coach")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "coach")
 	private List<Trip> trips;
 

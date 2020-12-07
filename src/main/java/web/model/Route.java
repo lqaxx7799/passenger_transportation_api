@@ -3,6 +3,7 @@ package web.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -47,7 +48,7 @@ public class Route implements Serializable {
 	private String startingPoint;
 
 	// bi-directional many-to-one association to Trip
-	@JsonManagedReference(value = "trip-route")
+	@JsonBackReference(value = "trip-route")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "route")
 	private List<Trip> trips;
 
