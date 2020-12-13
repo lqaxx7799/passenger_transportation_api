@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,9 @@ public class AccountController {
 	@Autowired
 	private AccountRepository accountRepository;
 	
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
+	
 	@GetMapping("/account")
 	public List<Account> getAll() {
 		return accountRepository.findAllAvailable();
@@ -43,6 +47,7 @@ public class AccountController {
 			throw new AccountExistsException(account.getUserName());
 		}
 		account.setIsDeleted(false);
+		account.setPassword(bcryptEncoder.encode(account.getPassword()));
 		return accountRepository.save(account);
 	}
 
@@ -51,7 +56,7 @@ public class AccountController {
 		// if found, perform update, else throw error
 		return accountRepository.findById(id).map(account -> {
 			// skip id, createdTime and isDeleted
-			account.setPassword(newAccount.getPassword());
+			account.setPassword(bcryptEncoder.encode(newAccount.getPassword()));
 			account.setEmail(newAccount.getEmail());
 			return accountRepository.save(account);
 		}).orElseThrow(() -> new AccountNotFoundException(id));
