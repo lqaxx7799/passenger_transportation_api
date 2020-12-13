@@ -69,8 +69,8 @@ public class Employee implements Serializable {
 	private Date startedTime;
 
 	// bi-directional many-to-one association to Trip
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "employee1")
 	@JsonBackReference(value = "trip-driver")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "employee1")
 	private List<Trip> trips1;
 
 	// bi-directional many-to-one association to Trip

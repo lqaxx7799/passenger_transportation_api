@@ -58,27 +58,27 @@ public class Trip implements Serializable {
 	private float ticketPrice;
 
 	// bi-directional many-to-one association to Coach
-	@JsonManagedReference(value = "trip-coach")
+//	@JsonManagedReference(value = "trip-coach")
 	@ManyToOne
 	@JoinColumn(name = "coach_id")
 	private Coach coach;
 
 	// bi-directional many-to-one association to Employee
-	@JsonManagedReference(value = "trip-driver")
+//	@JsonManagedReference(value = "trip-driver")
 	@ManyToOne
 	@JoinColumn(name = "driver_id")
 	private Employee employee1;
 
 	// bi-directional many-to-one association to Employee
-	@JsonManagedReference(value = "trip-assistant")
+//	@JsonManagedReference(value = "trip-assistant")
 	@ManyToOne
 	@JoinColumn(name = "assistant_id")
 	private Employee employee2;
 
 	// bi-directional many-to-one association to Route
+//	@JsonManagedReference(value = "trip-route")
 	@ManyToOne
 	@JoinColumn(name = "route_id")
-	@JsonManagedReference
 	private Route route;
 
 	public Trip() {
