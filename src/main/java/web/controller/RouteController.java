@@ -21,7 +21,7 @@ import web.model.Route;
 import web.repos.RouteRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class RouteController {
 	@Autowired
 	private RouteRepository routeRepository;

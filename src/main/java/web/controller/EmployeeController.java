@@ -21,7 +21,7 @@ import web.exception.EmployeeExistsException;
 import web.exception.EmployeeNotFoundException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class EmployeeController {
 	@Autowired
 	private EmployeeRepository employeeRepository;

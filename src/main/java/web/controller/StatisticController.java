@@ -23,7 +23,7 @@ import web.model.SalaryStatistic;
 import web.model.Trip;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class StatisticController {
 	@Autowired
 	private TripRepository tripRepository;

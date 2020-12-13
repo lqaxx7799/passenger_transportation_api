@@ -20,7 +20,7 @@ import web.exception.AccountExistsException;
 import web.exception.AccountNotFoundException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class AccountController {
 	@Autowired
 	private AccountRepository accountRepository;

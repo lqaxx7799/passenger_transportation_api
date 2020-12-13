@@ -18,7 +18,7 @@ import web.model.Trip;
 import web.model.CoachRevenueStatistic;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class CoachRevenueStatisticController {
 	@Autowired
 	private TripRepository tripRepository;

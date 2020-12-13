@@ -18,7 +18,7 @@ import web.model.Trip;
 import web.model.Coach;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class MaintenanceController {
 	@Autowired
 	private CoachRepository coachRepository;
