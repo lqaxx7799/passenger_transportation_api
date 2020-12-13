@@ -27,11 +27,11 @@ import web.model.Trip;
 public class StatisticController {
 	@Autowired
 	private TripRepository tripRepository;
-	private List<SalaryStatistic> list = new ArrayList<>();
 	
 	@GetMapping("/salary_statistic/{year}/{month}")
 	public List<SalaryStatistic> getSalarytStatistic(@PathVariable int year ,@PathVariable int month) 
 			throws ParseException {
+		List<SalaryStatistic> list = new ArrayList<>();
 		List<Employee> employees = new ArrayList<>();
 		List<Trip> trips = new ArrayList<>();
 		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -125,15 +125,15 @@ public class StatisticController {
 		return list;
 	}
 	
-	@GetMapping("/salary_statistic/detail/{id}")
-	public List<Trip> getDetail(@PathVariable int id){
-		List<Trip> trip= new ArrayList<>();
-		for(SalaryStatistic ss : list) {
-			if(ss.getEmployee().getId() == id) {
-				trip = ss.getTrips();
-				break;
-			}
-		}
-		return trip;
-	}
+//	@GetMapping("/salary_statistic/detail/{id}")
+//	public List<Trip> getDetail(@PathVariable int id){
+//		List<Trip> trip= new ArrayList<>();
+//		for(SalaryStatistic ss : list) {
+//			if(ss.getEmployee().getId() == id) {
+//				trip = ss.getTrips();
+//				break;
+//			}
+//		}
+//		return trip;
+//	}
 }
